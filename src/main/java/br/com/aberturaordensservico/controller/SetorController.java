@@ -14,7 +14,7 @@ import br.com.aberturaordensservico.service.SetorService;
 import org.springframework.web.bind.annotation.PostMapping;
 
 
-@RestController 
+@RestController
 public class SetorController {
     
     SetorService setorService;
