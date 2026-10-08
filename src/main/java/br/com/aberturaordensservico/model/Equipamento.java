@@ -4,9 +4,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity 
 @Table (name = "equipamento")
@@ -16,11 +18,15 @@ public class Equipamento {
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank (message = "O nome do equipamento não pode ser vazio")
     private String nome;
-    private int numeroPatrimonio;
+
+    @NotBlank (message = "O número de patrimônio do equipamento não pode ser vazio")
+    private String numeroPatrimonio;
 
     @ManyToOne
-    @NotBlank (message = "O setor do equipamento não pode ser vazio")
+    @JoinColumn (name = "setor_id", nullable = false)
+    @NotNull (message = "O setor do equipamento não pode ser vazio")
     private Setor setor;
 
     // Default constructor
@@ -28,7 +34,7 @@ public class Equipamento {
     }
 
     // Constructor com parâmetros
-    public Equipamento(String nome, int numeroPatrimonio, Setor setor) {
+    public Equipamento(String nome, String numeroPatrimonio, Setor setor) {
         this.nome = nome;
         this.numeroPatrimonio = numeroPatrimonio;
         this.setor = setor;
@@ -47,11 +53,11 @@ public class Equipamento {
         this.nome = nome;
     }
 
-    public int getNumeroPatrimonio() {
+    public String getNumeroPatrimonio() {
         return numeroPatrimonio;
     }
 
-    public void setNumeroPatrimonio(int numeroPatrimonio) {
+    public void setNumeroPatrimonio(String numeroPatrimonio) {
         this.numeroPatrimonio = numeroPatrimonio;
     }
 

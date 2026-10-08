@@ -1,6 +1,6 @@
 package br.com.aberturaordensservico.exception;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
@@ -14,7 +14,7 @@ public class ValidationExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String,String>> tratarValidacao(MethodArgumentNotValidException erro) {
         
-        Map<String,String> mensagens = new HashMap<>();
+        Map<String,String> mensagens = new LinkedHashMap<>();
         
         erro.getBindingResult().getFieldErrors().forEach(campo -> {
             mensagens.put(campo.getField(), campo.getDefaultMessage());

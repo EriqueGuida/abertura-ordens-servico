@@ -1,25 +1,44 @@
 package br.com.aberturaordensservico.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import br.com.aberturaordensservico.dto.EquipamentoRequest;
 import br.com.aberturaordensservico.model.Equipamento;
+import br.com.aberturaordensservico.model.Setor;
 import br.com.aberturaordensservico.repository.EquipamentoRepository;
+import br.com.aberturaordensservico.repository.SetorRepository;
 
 @Service 
 public class EquipamentoService {
     
     private final EquipamentoRepository equipamentoRepository;
 
+    private final SetorRepository setorRepository;
+
     // Constructor
-    public EquipamentoService(EquipamentoRepository equipamentoRepository) {
+    public EquipamentoService(EquipamentoRepository equipamentoRepository, SetorRepository setorRepository) {
         this.equipamentoRepository = equipamentoRepository;
+        this.setorRepository = setorRepository;
     }
 
     // Métodos do CRUD
-    public Equipamento cadastrarEquipamento(Equipamento equipamento) {
-        return equipamentoRepository.save(equipamento);
+    public Optional<Equipamento> cadastrarEquipamento(EquipamentoRequest equipamentoRequest) {
+        Optional<Setor> setorEncontrado = setorRepository.findById(equipamentoRequest.getSetorId());
+
+        if (setorEncontrado.isEmpty()){
+            return Optional.empty();
+        }
+
+        Equipamento equipamento = new Equipamento();
+
+        equipamento.setNome(equipamentoRequest.getNome());
+        equipamento.setNumeroPatrimonio(equipamentoRequest.getNumeroPatrimonio());  
+        equipamento.setSetor(setorEncontrado.get());
+
+        return Optional.of(equipamentoRepository.save(equipamento));
     }
 
     public List<Equipamento> listarEquipamentos() {
@@ -30,8 +49,9 @@ public class EquipamentoService {
         return equipamentoRepository.findById(id).orElse(null);
     }
 
-    public Equipamento atualizarEquipamento(Long id, Equipamento equipamentoAtualizado) {
-        Equipamento equipamentoExistente = equipamentoRepository.findById(id).orElse(null);
+    
+    public Equipamento atualizarEquipamento(Long equipamentoId, EquipamentoRequest equipamentoAtualizado) {
+        Equipamento equipamentoExistente = equipamentoRepository.findById(equipamentoId).orElse(null);
         if (equipamentoExistente != null) {
             equipamentoExistente.setNome(equipamentoAtualizado.getNome());
             return equipamentoRepository.save(equipamentoExistente);
