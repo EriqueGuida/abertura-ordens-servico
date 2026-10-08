@@ -6,6 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity 
 @Table (name = "equipamento")
@@ -17,8 +18,9 @@ public class Equipamento {
 
     private String nome;
     private int numeroPatrimonio;
-    
+
     @ManyToOne
+    @NotBlank (message = "O setor do equipamento não pode ser vazio")
     private Setor setor;
 
     // Default constructor

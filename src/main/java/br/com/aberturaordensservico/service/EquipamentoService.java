@@ -47,4 +47,7 @@ public class EquipamentoService {
         return false;
     }
     
+    public List<Equipamento> buscarEquipamentosPorSetorId(Integer setorId) {
+        return equipamentoRepository.findBySetorId(setorId);
+    }
 }

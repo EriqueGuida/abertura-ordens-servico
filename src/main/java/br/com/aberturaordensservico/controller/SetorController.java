@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.aberturaordensservico.model.Setor;
 import br.com.aberturaordensservico.service.SetorService;
+import jakarta.validation.Valid;
+
 import org.springframework.web.bind.annotation.PostMapping;
 
 
@@ -41,7 +43,7 @@ public class SetorController {
     }
 
     @PutMapping ("/setores/{id}")
-    public Setor atualizarSetor(@PathVariable Long id, @RequestBody Setor setorAtualizado) {
+    public Setor atualizarSetor(@PathVariable Long id, @Valid @RequestBody Setor setorAtualizado) {
         return setorService.atualizarSetor(id, setorAtualizado);
     }
 

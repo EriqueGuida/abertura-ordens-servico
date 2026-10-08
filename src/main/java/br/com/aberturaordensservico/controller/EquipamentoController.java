@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.aberturaordensservico.model.Equipamento;
 import br.com.aberturaordensservico.service.EquipamentoService;
+import jakarta.validation.Valid;
 
 @RestController
 public class EquipamentoController {
@@ -25,7 +26,7 @@ public class EquipamentoController {
     
     // Métodos do CRUD
     @PostMapping("/equipamentos")
-    public Equipamento cadastrarEquipamento(@RequestBody Equipamento equipamento) {
+    public Equipamento cadastrarEquipamento(@Valid @RequestBody Equipamento equipamento) {
         return equipamentoService.cadastrarEquipamento(equipamento);
     }
 
@@ -40,12 +41,17 @@ public class EquipamentoController {
     }
 
     @PutMapping ("/equipamentos/{id}")
-    public Equipamento atualizarEquipamento(@PathVariable Long id, @RequestBody Equipamento equipamentoAtualizado) {
+    public Equipamento atualizarEquipamento(@PathVariable Long id, @Valid  @RequestBody Equipamento equipamentoAtualizado) {
         return equipamentoService.atualizarEquipamento(id, equipamentoAtualizado);
     }
     
     @DeleteMapping ("/equipamentos/{id}")
     public boolean deletarEquipamento(@PathVariable Long id) {
         return equipamentoService.deletarEquipamento(id);
+    }
+
+    @GetMapping("/equipamentos/setor/{setorId}")
+    public List<Equipamento> buscarEquipamentosPorSetorId(@PathVariable Integer setorId) {
+        return equipamentoService.buscarEquipamentosPorSetorId(setorId);
     }
 }
