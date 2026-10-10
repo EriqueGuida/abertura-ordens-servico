@@ -36,5 +36,6 @@ public class OrdemServicoController {
     @GetMapping
     public List<OrdemServico> listarOrdensServico() {
         return ordemServicoService.listarOrdensServico();
+
     }
 }

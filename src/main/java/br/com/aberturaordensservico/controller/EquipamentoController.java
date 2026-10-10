@@ -17,7 +17,7 @@ import br.com.aberturaordensservico.model.Equipamento;
 import br.com.aberturaordensservico.service.EquipamentoService;
 import jakarta.validation.Valid;
 
-@RestController
+@RestController 
 public class EquipamentoController {
     
     private final EquipamentoService equipamentoService;
